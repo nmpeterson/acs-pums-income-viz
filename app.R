@@ -1,16 +1,7 @@
-#
-# This is a Shiny web application. You can run the application by clicking
-# the 'Run App' button above.
-#
-# Find out more about building applications with Shiny here:
-#
-#    http://shiny.rstudio.com/
-#
-
 library(shiny)
 library(shinythemes)
-library(htmltools)
-library(tidyverse)
+library(dplyr)
+library(ggplot2)
 library(scales)
 library(spatstat)
 
@@ -19,7 +10,7 @@ load("data/pums.rds")
 pums <- pums
 max_income <- max(pums$Income)
 
-# Define UI for application that draws a histogram
+# Define UI for application that draws frequency distributions
 ui <- fluidPage(theme = shinytheme("yeti"),
 
   # Application title
@@ -81,7 +72,7 @@ server <- function(input, output) {
           geom_vline(xintercept = df_med_inc, col = "darkblue") +
           annotate(geom = "text", x = df_med_inc, y = Inf, hjust = -0.1, vjust = 2,
                    label = paste("Median:", dollar(df_med_inc)), col = "darkblue") +
-          scale_x_continuous(limits = c(0, input$xmax), labels = scales::label_dollar()) +
+          scale_x_continuous(limits = c(0, input$xmax), labels = label_dollar()) +
           theme_minimal() +
           theme(axis.text.y = element_blank(),
                 panel.grid.major.y = element_blank(),
